@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from flask import Flask, url_for, session, request, redirect
+from flask import Flask, url_for, session, request, redirect, render_template
 import time
 import creds
 
@@ -8,6 +8,16 @@ app = Flask(__name__)
 
 app.secret_key = 'realhardik18iscool'
 app.config['SESSION_COOKIE_NAME'] = 'realhardik18LovesCOOkies'
+
+
+@app.route('/home')
+def home():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    return render_template('index.html', user=sp.me()['display_name'], link_to_profile=sp.me()['external_urls']['spotify'])
 
 
 @app.route('/')
@@ -25,7 +35,7 @@ def authorize():
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
-    return redirect("/data")
+    return redirect("/home")
 
 
 @app.route('/logout')
@@ -35,8 +45,8 @@ def logout():
     return redirect('/')
 
 
-@app.route('/data')
-def get_all_tracks():
+@app.route('/stats')
+def stats():
     session['token_info'], authorized = get_token()
     session.modified = True
     if not authorized:
