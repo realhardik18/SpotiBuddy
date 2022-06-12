@@ -41,7 +41,14 @@ def get_all_tracks():
     session.modified = True
     if not authorized:
         return redirect('/')
-    return 'hello'
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    songs = 0
+    for item in sp.current_user_recently_played(limit=50)['items']:
+        print(
+            f"{item['track']['name']} by {item['track']['artists'][0]['name']}")
+        songs += 1
+    print(songs)
+    return sp.current_user_recently_played(limit=50)['items'][0]
 
 
 def get_token():
@@ -65,7 +72,7 @@ def create_spotify_oauth():
         client_id=creds.client_id,
         client_secret=creds.client_secret,
         redirect_uri=url_for('authorize', _external=True),
-        scope="user-library-read")
+        scope="user-read-recently-played")
 
 
-app.run()
+app.run(debug=True)
