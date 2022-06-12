@@ -45,7 +45,17 @@ def logout():
     return redirect('/')
 
 
-@app.route('/stats')
+@app.route('/Stats')
+def stats():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    return sp.current_user_top_artists(time)
+
+
+@app.route('/Stats/Artists')
 def stats():
     session['token_info'], authorized = get_token()
     session.modified = True
