@@ -74,7 +74,10 @@ def artists_short_term():
         local_dict['pfp_of_artist'] = item['images'][1]['url']
         data.append(local_dict)
         rank += 1
-    return str(data)
+    final_data = []
+    for i in range(0, len(data)+1, 4):
+        final_data.append(data[i-4: i])
+    return render_template('topartists.html', user=sp.me()['display_name'], data=final_data[1:0])
 
 
 @app.route('/Stats/Artist/six-months')
