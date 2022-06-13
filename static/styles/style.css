@@ -46,12 +46,3 @@ html body {
     margin-top: 5px;
     font-size: 150px;
 }
-
-.ty-text{
-    color: white;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    bottom: 0px;
-    position: absolute;
-    font-size: 20px;
-}
