@@ -71,7 +71,7 @@ def artists_short_term():
         local_dict['monthly-listeners'] = item['followers']
         local_dict['genres'] = item['genres']
         local_dict['link_to_artist'] = item['href']
-        local_dict['pfp_of_artist'] = item['images'][2]['url']
+        local_dict['pfp_of_artist'] = item['images'][1]['url']
         data.append(local_dict)
         rank += 1
     return str(data)
@@ -93,7 +93,7 @@ def artists_medium_term():
         local_dict['monthly-listeners'] = item['followers']
         local_dict['genres'] = item['genres']
         local_dict['link_to_artist'] = item['href']
-        local_dict['pfp_of_artist'] = item['images'][2]['url']
+        local_dict['pfp_of_artist'] = item['images'][1]['url']
         data.append(local_dict)
         rank += 1
     return str(data)
@@ -115,7 +115,7 @@ def artists_long_term():
         local_dict['monthly-listeners'] = item['followers']
         local_dict['genres'] = item['genres']
         local_dict['link_to_artist'] = item['href']
-        local_dict['pfp_of_artist'] = item['images'][2]['url']
+        local_dict['pfp_of_artist'] = item['images'][1]['url']
         data.append(local_dict)
         rank += 1
     return str(data)
