@@ -62,7 +62,19 @@ def artists_short_term():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')
+    data = []
+    rank = 1
+    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')['items']:
+        local_dict = {}
+        local_dict['name'] = item['name']
+        local_dict['rank'] = str(rank)
+        local_dict['monthly-listeners'] = item['followers']
+        local_dict['genres'] = item['genres']
+        local_dict['link_to_artist'] = item['href']
+        local_dict['pfp_of_artist'] = item['images'][0]['url']
+        data.append(local_dict)
+        rank += 1
+    return str(data)
 
 
 @app.route('/Stats/Artist/six-months')
@@ -72,7 +84,19 @@ def artists_medium_term():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+    data = []
+    rank = 1
+    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')['items']:
+        local_dict = {}
+        local_dict['name'] = item['name']
+        local_dict['rank'] = str(rank)
+        local_dict['monthly-listeners'] = item['followers']
+        local_dict['genres'] = item['genres']
+        local_dict['link_to_artist'] = item['href']
+        local_dict['pfp_of_artist'] = item['images'][0]['url']
+        data.append(local_dict)
+        rank += 1
+    return str(data)
 
 
 @app.route('/Stats/Artist/lifetime')
@@ -82,8 +106,19 @@ def artists_long_term():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    #sp.current_user_top_tracks(limit=20, offset=0, time_range='long_term')
-    return sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')
+    data = []
+    rank = 1
+    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')['items']:
+        local_dict = {}
+        local_dict['name'] = item['name']
+        local_dict['rank'] = str(rank)
+        local_dict['monthly-listeners'] = item['followers']
+        local_dict['genres'] = item['genres']
+        local_dict['link_to_artist'] = item['href']
+        local_dict['pfp_of_artist'] = item['images'][0]['url']
+        data.append(local_dict)
+        rank += 1
+    return str(data)
 
 
 def get_token():
