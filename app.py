@@ -17,7 +17,7 @@ def home():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return render_template('index.html', user=sp.me()['display_name'], link_to_profile=sp.me()['external_urls']['spotify'])
+    return render_template('index.html', user=sp.me()['display_name'])
 
 
 @app.route('/')
@@ -46,29 +46,44 @@ def logout():
 
 
 @app.route('/Stats')
-def stats():
+def Stats():
     session['token_info'], authorized = get_token()
     session.modified = True
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return sp.current_user_top_artists(time)
+    return render_template('stats.html', user=sp.me()['display_name'])
 
 
-@app.route('/Stats/Artists')
-def stats():
+@app.route('/Stats/Artist/four-weeks')
+def artists_short_term():
     session['token_info'], authorized = get_token()
     session.modified = True
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    songs = 0
-    for item in sp.current_user_recently_played(limit=50)['items']:
-        print(
-            f"{item['track']['name']} by {item['track']['artists'][0]['name']}")
-        songs += 1
-    print(songs)
-    return sp.current_user_recently_played(limit=50)['items'][0]
+    return sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')
+
+
+@app.route('/Stats/Artist/six-months')
+def artists_medium_term():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    return sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')
+
+
+@app.route('/Stats/Artist/lifetime')
+def artists_long_term():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+    #sp.current_user_top_tracks(limit=20, offset=0, time_range='long_term')
+    return sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')
 
 
 def get_token():
@@ -92,7 +107,7 @@ def create_spotify_oauth():
         client_id=creds.client_id,
         client_secret=creds.client_secret,
         redirect_uri=url_for('authorize', _external=True),
-        scope="user-read-recently-played")
+        scope="user-top-read user-library-read")
 
 
 app.run(debug=True)
