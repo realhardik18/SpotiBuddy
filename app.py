@@ -18,7 +18,7 @@ def home():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return render_template('index.html', user=sp.me()['display_name'])
+    return render_template('index.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'])
 
 
 @app.route('/')
@@ -53,7 +53,7 @@ def Stats():
     if not authorized:
         return redirect('/')
     sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    return render_template('stats.html', user=sp.me()['display_name'])
+    return render_template('stats.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'])
 
 
 @app.route('/Stats/Artist/<time>')
@@ -129,7 +129,7 @@ def artists_stats(time):
             local_dict['popularity_score'] = item['popularity']
             data.append(local_dict)
             rank += 1
-        return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration='a lifetime')
+        return render_template('topartists.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data, time_duration='a lifetime')
     else:
         return redirect(url_for('Stats'))
 
