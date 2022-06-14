@@ -77,7 +77,7 @@ def artists_short_term():
     final_data = []
     for i in range(0, len(data)+1, 4):
         final_data.append(data[i-4: i])
-    return render_template('topartists.html', user=sp.me()['display_name'], data=final_data[1:0])
+    return render_template('topartists.html', user=sp.me()['display_name'], data=final_data[1:0], time_duration='4 weeks')
 
 
 @app.route('/Stats/Artist/six-months')
