@@ -130,6 +130,8 @@ def artists_stats(time):
             data.append(local_dict)
             rank += 1
         return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration='a lifetime')
+    else:
+        return redirect(url_for('Stats'))
 
 
 def get_token():
