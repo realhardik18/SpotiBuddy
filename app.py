@@ -55,8 +55,8 @@ def Stats():
     return render_template('stats.html', user=sp.me()['display_name'])
 
 
-@app.route('/Stats/Artist/four-weeks')
-def artists_short_term():
+@app.route('/Stats/Artist/<timee>')
+def artists_short_term(timee):
     session['token_info'], authorized = get_token()
     session.modified = True
     if not authorized:
@@ -68,16 +68,25 @@ def artists_short_term():
         local_dict = {}
         local_dict['name'] = item['name']
         local_dict['rank'] = str(rank)
-        local_dict['monthly-listeners'] = item['followers']
+        local_dict['followers'] = item['followers']['total']
         local_dict['genres'] = item['genres']
-        local_dict['link_to_artist'] = item['href']
+        local_dict['link_to_artist'] = item['external_urls']['spotify']
         local_dict['pfp_of_artist'] = item['images'][1]['url']
+        local_dict['popularity_score'] = item['popularity']
         data.append(local_dict)
         rank += 1
-    final_data = []
-    for i in range(0, len(data)+1, 4):
-        final_data.append(data[i-4: i])
-    return render_template('topartists.html', user=sp.me()['display_name'], data=final_data[1:0], time_duration='4 weeks')
+    offset_1 = sp.current_user_top_artists(
+        limit=20, offset=10, time_range='short_term')['items'][-1]
+    offset_dict = dict()
+    offset_dict['name'] = offset_1['name']
+    offset_dict['rank'] = '20'
+    offset_dict['followers'] = offset_1['followers']['total']
+    offset_dict['genres'] = offset_1['genres']
+    offset_dict['link_to_artist'] = offset_1['external_urls']['spotify']
+    offset_dict['pfp_of_artist'] = offset_1['images'][1]['url']
+    offset_dict['popularity_score'] = offset_1['popularity']
+    data.append(offset_dict)
+    return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration=timee)
 
 
 @app.route('/Stats/Artist/six-months')
@@ -93,7 +102,7 @@ def artists_medium_term():
         local_dict = {}
         local_dict['name'] = item['name']
         local_dict['rank'] = str(rank)
-        local_dict['monthly-listeners'] = item['followers']
+        local_dict['monthly-listeners'] = item['followers']['total']
         local_dict['genres'] = item['genres']
         local_dict['link_to_artist'] = item['href']
         local_dict['pfp_of_artist'] = item['images'][1]['url']
@@ -115,7 +124,7 @@ def artists_long_term():
         local_dict = {}
         local_dict['name'] = item['name']
         local_dict['rank'] = str(rank)
-        local_dict['monthly-listeners'] = item['followers']
+        local_dict['monthly-listeners'] = item['followers']['total']
         local_dict['genres'] = item['genres']
         local_dict['link_to_artist'] = item['href']
         local_dict['pfp_of_artist'] = item['images'][1]['url']
