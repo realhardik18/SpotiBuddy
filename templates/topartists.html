@@ -40,7 +40,7 @@
             </ul>
         </div>
     </nav>
-    <h1 class="title-text-for-top-artist">Here are your top 20 artists over {{time_duration}}</h1>
+    <h1 class="title-text-for-top-artist">Here are your top artists over a period of {{time_duration}}</h1>
     <div class="card-group" style="margin-left:40px;margin-right:40px;margin-top:20px;margin-bottom:20px;">
         <div class="card-deck" style="margin-bottom:20px;">
             <div class="card" style="background-color: #ffd700;">
@@ -313,7 +313,7 @@
                     <h4>Popularity Score:</h4>
                     <p class="card-text">{{data[13]['popularity_score']}}</p>
                 </div>
-                <a href="{{data[0]['link_to_artist']}}" type="button" class="btn btn-dark"
+                <a href="{{data[13]['link_to_artist']}}" type="button" class="btn btn-dark"
                     style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[13]['name']}} on
                     Spotify</a>
                 <div class="card-footer">
@@ -332,7 +332,7 @@
                     <h4>Popularity Score:</h4>
                     <p class="card-text">{{data[14]['popularity_score']}}</p>
                 </div>
-                <a href="{{data[0]['link_to_artist']}}" type="button" class="btn btn-dark"
+                <a href="{{data[14]['link_to_artist']}}" type="button" class="btn btn-dark"
                     style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[14]['name']}} on
                     Spotify</a>
                 <div class="card-footer">
@@ -351,7 +351,7 @@
                     <h4>Popularity Score:</h4>
                     <p class="card-text">{{data[15]['popularity_score']}}</p>
                 </div>
-                <a href="{{data[0]['link_to_artist']}}" type="button" class="btn btn-dark"
+                <a href="{{data[15]['link_to_artist']}}" type="button" class="btn btn-dark"
                     style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[15]['name']}} on
                     Spotify</a>
                 <div class="card-footer">

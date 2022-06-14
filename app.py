@@ -1,3 +1,4 @@
+from threading import local
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect, render_template
@@ -55,82 +56,80 @@ def Stats():
     return render_template('stats.html', user=sp.me()['display_name'])
 
 
-@app.route('/Stats/Artist/<timee>')
-def artists_short_term(timee):
-    session['token_info'], authorized = get_token()
-    session.modified = True
-    if not authorized:
-        return redirect('/')
-    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    data = []
-    rank = 1
-    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')['items']:
-        local_dict = {}
-        local_dict['name'] = item['name']
-        local_dict['rank'] = str(rank)
-        local_dict['followers'] = item['followers']['total']
-        local_dict['genres'] = item['genres']
-        local_dict['link_to_artist'] = item['external_urls']['spotify']
-        local_dict['pfp_of_artist'] = item['images'][1]['url']
-        local_dict['popularity_score'] = item['popularity']
-        data.append(local_dict)
-        rank += 1
-    offset_1 = sp.current_user_top_artists(
-        limit=20, offset=10, time_range='short_term')['items'][-1]
-    offset_dict = dict()
-    offset_dict['name'] = offset_1['name']
-    offset_dict['rank'] = '20'
-    offset_dict['followers'] = offset_1['followers']['total']
-    offset_dict['genres'] = offset_1['genres']
-    offset_dict['link_to_artist'] = offset_1['external_urls']['spotify']
-    offset_dict['pfp_of_artist'] = offset_1['images'][1]['url']
-    offset_dict['popularity_score'] = offset_1['popularity']
-    data.append(offset_dict)
-    return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration=timee)
-
-
-@app.route('/Stats/Artist/six-months')
-def artists_medium_term():
-    session['token_info'], authorized = get_token()
-    session.modified = True
-    if not authorized:
-        return redirect('/')
-    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    data = []
-    rank = 1
-    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')['items']:
-        local_dict = {}
-        local_dict['name'] = item['name']
-        local_dict['rank'] = str(rank)
-        local_dict['monthly-listeners'] = item['followers']['total']
-        local_dict['genres'] = item['genres']
-        local_dict['link_to_artist'] = item['href']
-        local_dict['pfp_of_artist'] = item['images'][1]['url']
-        data.append(local_dict)
-        rank += 1
-    return str(data)
-
-
-@app.route('/Stats/Artist/lifetime')
-def artists_long_term():
-    session['token_info'], authorized = get_token()
-    session.modified = True
-    if not authorized:
-        return redirect('/')
-    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
-    data = []
-    rank = 1
-    for item in sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')['items']:
-        local_dict = {}
-        local_dict['name'] = item['name']
-        local_dict['rank'] = str(rank)
-        local_dict['monthly-listeners'] = item['followers']['total']
-        local_dict['genres'] = item['genres']
-        local_dict['link_to_artist'] = item['href']
-        local_dict['pfp_of_artist'] = item['images'][1]['url']
-        data.append(local_dict)
-        rank += 1
-    return str(data)
+@app.route('/Stats/Artist/<time>')
+def artists_stats(time):
+    if time == 'four-weeks':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for item in sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')['items']:
+            local_dict = {}
+            local_dict['name'] = item['name']
+            local_dict['rank'] = str(rank)
+            local_dict['followers'] = item['followers']['total']
+            if len(item['genres']) == 0:
+                local_dict['genres'] = ['Not Available']
+            else:
+                local_dict['genres'] = item['genres']
+            local_dict['link_to_artist'] = item['external_urls']['spotify']
+            local_dict['pfp_of_artist'] = item['images'][1]['url']
+            local_dict['popularity_score'] = item['popularity']
+            data.append(local_dict)
+            rank += 1
+        return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration='four weeks')
+    elif time == 'six-months':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for item in sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')['items']:
+            local_dict = {}
+            local_dict['name'] = item['name']
+            local_dict['rank'] = str(rank)
+            local_dict['followers'] = item['followers']['total']
+            if len(item['genres']) == 0:
+                local_dict['genres'] = ['Not Available']
+            else:
+                local_dict['genres'] = item['genres']
+            local_dict['link_to_artist'] = item['external_urls']['spotify']
+            local_dict['pfp_of_artist'] = item['images'][1]['url']
+            local_dict['popularity_score'] = item['popularity']
+            data.append(local_dict)
+            rank += 1
+        return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration='six months')
+    elif time == 'lifetime':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for item in sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')['items']:
+            local_dict = {}
+            local_dict['name'] = item['name']
+            local_dict['rank'] = str(rank)
+            local_dict['followers'] = item['followers']['total']
+            if len(item['genres']) == 0:
+                local_dict['genres'] = ['Not Available']
+            else:
+                local_dict['genres'] = item['genres']
+            local_dict['link_to_artist'] = item['external_urls']['spotify']
+            local_dict['pfp_of_artist'] = item['images'][1]['url']
+            local_dict['popularity_score'] = item['popularity']
+            data.append(local_dict)
+            rank += 1
+        return render_template('topartists.html', user=sp.me()['display_name'], data=data, time_duration='a lifetime')
 
 
 def get_token():
