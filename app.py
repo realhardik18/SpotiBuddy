@@ -257,7 +257,7 @@ def create_spotify_oauth():
         client_id=creds.client_id,
         client_secret=creds.client_secret,
         redirect_uri=url_for('authorize', _external=True),
-        scope="user-top-read user-library-read")
+        scope="user-top-read user-library-read user-read-email")
 
 
 app.run(debug=True)
