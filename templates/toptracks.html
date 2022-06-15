@@ -45,41 +45,35 @@
             </ul>
         </div>
     </nav>
-    <div class="card" style="margin-top:20px;margin-left:50px;margin-right:50px;margin-bottom:20px;">
-        <h5 class="card-header">Your Top Artists 🎤</h5>
+    <h1 class="title-text-for-top-artist">Here are your top tracks over a period of {{time_duration}}</h1>
+    {% for track in data %}
+    <div class="card"
+        style="margin-left: 40px;margin-right:40px;margin-top:10px;margin-bottom:30px;background-color: {{track['color']}};">
         <div class="card-body">
-            <h5 class="card-title">Lets see whose songs are you looping right now 👀</h5>
-            <p class="card-text">You can check the top artists for the past 4 weeks, 6 months or lifetime!</p>
-            <a href="/Stats/Artist/four-weeks" class="btn btn-success">4 weeks</a>
-            <a href="/Stats/Artist/six-months" class="btn btn-primary">6 months</a>
-            <a href="/Stats/Artist/lifetime" class="btn btn-info">lifetime</a>
+            <table style="width: 100%;">
+                <tr>
+                    <th>
+                        <h2>{{track['name_of_track']}} by {{track['name_of_artist']}}</h2>
+                    </th>
+                <tr>
+                    <td style="margin-top: 10px;"><iframe style="border-radius:12px" src="{{track['embed_url']}}"
+                            width="100%" height="80" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                </tr>
+            </table>
+            </p>
+        </div>
+        <div class="card-footer text-black">
+            <strong>Rank: {{track['rank']}} || Popularity Score: {{track['popularity']}} || Date Released:
+                {{track['date_launched']}}</strong>
         </div>
     </div>
-    <div class="card" style="margin-top:20px;margin-left:50px;margin-right:50px;margin-bottom:20px;">
-        <h5 class="card-header">Your Top Tracks 🎵</h5>
-        <div class="card-body">
-            <h5 class="card-title">What are your top listened tracks 🤔</h5>
-            <p class="card-text">These also have the same time options as the previous option. you can filter with 4
-                weeks, 6 months or a lifetime!</p>
-            <p class="card-text">You can check the top tracks for the past 4 weeks, 6 months or lifetime!</p>
-            <a href="/Stats/Tracks/four-weeks" class="btn btn-success">4 weeks</a>
-            <a href="/Stats/Tracks/six-months" class="btn btn-primary">6 months</a>
-            <a href="/Stats/Tracks/lifetime" class="btn btn-info">lifetime</a>
-        </div>
-    </div>
-    <div class="card" style="margin-top:20px;margin-left:50px;margin-right:50px;margin-bottom:20px;">
-        <h5 class="card-header">Stats of your friends 🍟</h5>
-        <div class="card-body">
-            <h5 class="card-title">YES YOU HEARD THAT RIGHT 🗣️</h5>
-            <p class="card-text">with SpotiBuddy, you can check out stats of your friends too! make sure your are
-                following them on spotify and they have an account on SpotiBuddy! If not, you can always invite them
-                here!!</p>
-            <a href="#" class="btn btn-primary">See stats of your followers</a>
-        </div>
-    </div>
-    <footer class="bg-dark text-center text-lg-start fixed-bottom">
+    {% endfor %}
+    <footer class=" bg-dark text-center text-lg-start fixed-bottom">
         <a class="text-light">made with ❤️ by <a class="link-info"
                 href="https://realhardik18.github.io">Realhardik18</a></a>
     </footer>
+</body>
+
 
 </html>

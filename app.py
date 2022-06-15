@@ -6,6 +6,7 @@ import time
 import creds
 import locale
 
+
 app = Flask(__name__)
 
 app.secret_key = 'realhardik18iscool'
@@ -69,7 +70,7 @@ def artists_stats(time):
             'token_info').get('access_token'))
         data = []
         rank = 1
-        for item in sp.current_user_top_artists(limit=20, offset=0, time_range='short_term')['items']:
+        for item in sp.current_user_top_artists(limit=15, offset=0, time_range='short_term')['items']:
             local_dict = {}
             local_dict['name'] = item['name']
             local_dict['rank'] = str(rank)
@@ -97,9 +98,9 @@ def artists_stats(time):
         for item in sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')['items']:
             local_dict = {}
             local_dict['name'] = item['name']
-            local_dict['rank'] = str(rank)
-            local_dict['followers'] = str(locale.format(
+            local_dict['rank'] = str(locale.format(
                 "%d", int(item['followers']['total']), grouping=True))
+            local_dict['followers'] = item['followers']['total']
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
@@ -122,9 +123,9 @@ def artists_stats(time):
         for item in sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')['items']:
             local_dict = {}
             local_dict['name'] = item['name']
-            local_dict['rank'] = str(rank)
-            local_dict['followers'] = str(locale.format(
+            local_dict['rank'] = str(locale.format(
                 "%d", int(item['followers']['total']), grouping=True))
+            local_dict['followers'] = item['followers']['total']
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
@@ -135,6 +136,102 @@ def artists_stats(time):
             data.append(local_dict)
             rank += 1
         return render_template('topartists.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data, time_duration='a lifetime')
+    else:
+        return redirect(url_for('Stats'))
+
+
+@app.route('/Stats/Tracks/<time>')
+def tracks_stats(time):
+    if time == 'four-weeks':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for track in sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')['items']:
+            local_dict = dict()
+            local_dict['url_to_artist'] = track['album']['artists'][0]['external_urls']['spotify']
+            local_dict['name_of_artist'] = track['album']['artists'][0]['name']
+            local_dict['name_of_track'] = track['name']
+            local_dict['popularity'] = track['popularity']
+            local_dict['rank'] = str(rank)
+            local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['id']}?utm_source=generator"
+            if rank == 1:
+                local_dict['color'] = '#ffd700'
+            elif rank == 2:
+                local_dict['color'] = '#C0C0C0'
+            elif rank == 3:
+                local_dict['color'] = '#CD7F32'
+            else:
+                local_dict['color'] = 'ffffff'
+            local_dict['date_launched'] = track['album']['release_date']
+            data.append(local_dict)
+            rank += 1
+        # return sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')['items'][0]['album']['release_date']
+        return render_template('toptracks.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data, time_duration='four weeks')
+    elif time == 'six-months':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for track in sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')['items']:
+            local_dict = dict()
+            local_dict['url_to_artist'] = track['album']['artists'][0]['external_urls']['spotify']
+            local_dict['name_of_artist'] = track['album']['artists'][0]['name']
+            local_dict['name_of_track'] = track['name']
+            local_dict['popularity'] = track['popularity']
+            local_dict['rank'] = str(rank)
+            local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['id']}?utm_source=generator"
+            if rank == 1:
+                local_dict['color'] = '#ffd700'
+            elif rank == 2:
+                local_dict['color'] = '#C0C0C0'
+            elif rank == 3:
+                local_dict['color'] = '#CD7F32'
+            else:
+                local_dict['color'] = 'ffffff'
+            local_dict['date_launched'] = track['album']['release_date']
+            data.append(local_dict)
+            rank += 1
+        # return sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')['items'][0]['album']['release_date']
+        return render_template('toptracks.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data, time_duration='six months')
+    elif time == 'lifetime':
+        session['token_info'], authorized = get_token()
+        session.modified = True
+        if not authorized:
+            return redirect('/')
+        sp = spotipy.Spotify(auth=session.get(
+            'token_info').get('access_token'))
+        data = []
+        rank = 1
+        for track in sp.current_user_top_tracks(limit=20, offset=0, time_range='long_term')['items']:
+            local_dict = dict()
+            local_dict['url_to_artist'] = track['album']['artists'][0]['external_urls']['spotify']
+            local_dict['name_of_artist'] = track['album']['artists'][0]['name']
+            local_dict['name_of_track'] = track['name']
+            local_dict['popularity'] = track['popularity']
+            local_dict['rank'] = str(rank)
+            local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['id']}?utm_source=generator"
+            if rank == 1:
+                local_dict['color'] = '#ffd700'
+            elif rank == 2:
+                local_dict['color'] = '#C0C0C0'
+            elif rank == 3:
+                local_dict['color'] = '#CD7F32'
+            else:
+                local_dict['color'] = 'ffffff'
+            local_dict['date_launched'] = track['album']['release_date']
+            data.append(local_dict)
+            rank += 1
+        # return sp.current_user_top_tracks(limit=20, offset=0, time_range='short_term')['items'][0]['album']['release_date']
+        return render_template('toptracks.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data, time_duration='a lifetime')
     else:
         return redirect(url_for('Stats'))
 
