@@ -4,11 +4,13 @@ from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect, render_template
 import time
 import creds
+import locale
 
 app = Flask(__name__)
 
 app.secret_key = 'realhardik18iscool'
 app.config['SESSION_COOKIE_NAME'] = 'realhardik18LovesCOOkies'
+locale.setlocale(locale.LC_ALL, 'en_US')
 
 
 @app.route('/home')
@@ -71,7 +73,8 @@ def artists_stats(time):
             local_dict = {}
             local_dict['name'] = item['name']
             local_dict['rank'] = str(rank)
-            local_dict['followers'] = item['followers']['total']
+            local_dict['followers'] = str(locale.format(
+                "%d", int(item['followers']['total']), grouping=True))
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
@@ -95,7 +98,8 @@ def artists_stats(time):
             local_dict = {}
             local_dict['name'] = item['name']
             local_dict['rank'] = str(rank)
-            local_dict['followers'] = item['followers']['total']
+            local_dict['followers'] = str(locale.format(
+                "%d", int(item['followers']['total']), grouping=True))
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
@@ -119,7 +123,8 @@ def artists_stats(time):
             local_dict = {}
             local_dict['name'] = item['name']
             local_dict['rank'] = str(rank)
-            local_dict['followers'] = item['followers']['total']
+            local_dict['followers'] = str(locale.format(
+                "%d", int(item['followers']['total']), grouping=True))
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
