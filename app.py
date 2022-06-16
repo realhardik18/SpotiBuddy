@@ -245,17 +245,20 @@ def follower_stats():
     sp = spotipy.Spotify(auth=session.get(
         'token_info').get('access_token'))
     tracks = sp.current_user_recently_played(limit=50)['items']
-    rank = 0
+    rank = 1
+    data = []
     for track in tracks:
         local_dict = dict()
-        local_dict['url_to_artist'] = track['album']['artists'][0]['external_urls']['spotify']
-        local_dict['name_of_artist'] = track['album']['artists'][0]['name']
-        local_dict['name_of_track'] = track['name']
-        local_dict['popularity'] = track['popularity']
+        local_dict['url_to_artist'] = track['track']['artists'][0]['external_urls']['spotify']
+        local_dict['name_of_artist'] = track['track']['artists'][0]['name']
+        local_dict['name_of_track'] = track['track']['name']
+        local_dict['popularity'] = track['track']['popularity']
         local_dict['rank'] = str(rank)
-        local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['id']}?utm_source=generator"
+        local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['track']['id']}?utm_source=generator"
+        data.append(local_dict)
         rank += 1
-    return render_template('toptracks.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data)
+    return render_template('recently-played.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data)
+    # return str(tracks[0])
 
 
 def get_token():
