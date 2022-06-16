@@ -1,4 +1,3 @@
-from threading import local
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect, render_template
@@ -11,7 +10,6 @@ app = Flask(__name__)
 
 app.secret_key = 'realhardik18iscool'
 app.config['SESSION_COOKIE_NAME'] = 'realhardik18LovesCOOkies'
-locale.setlocale(locale.LC_ALL, 'en_US')
 
 
 @app.route('/home')
@@ -74,8 +72,8 @@ def artists_stats(time):
             local_dict = {}
             local_dict['name'] = item['name']
             local_dict['rank'] = str(rank)
-            local_dict['followers'] = str(locale.format(
-                "%d", int(item['followers']['total']), grouping=True))
+            local_dict['followers'] = str(
+                '{:,}'.format(int(item['followers']['total'])))
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
             else:
@@ -98,8 +96,8 @@ def artists_stats(time):
         for item in sp.current_user_top_artists(limit=20, offset=0, time_range='medium_term')['items']:
             local_dict = {}
             local_dict['name'] = item['name']
-            local_dict['rank'] = str(locale.format(
-                "%d", int(item['followers']['total']), grouping=True))
+            local_dict['rank'] = str('{:,}'.format(
+                int(item['followers']['total'])))
             local_dict['followers'] = item['followers']['total']
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
@@ -123,8 +121,8 @@ def artists_stats(time):
         for item in sp.current_user_top_artists(limit=20, offset=0, time_range='long_term')['items']:
             local_dict = {}
             local_dict['name'] = item['name']
-            local_dict['rank'] = str(locale.format(
-                "%d", int(item['followers']['total']), grouping=True))
+            local_dict['rank'] = str('{:,}'.format(
+                int(item['followers']['total'])))
             local_dict['followers'] = item['followers']['total']
             if len(item['genres']) == 0:
                 local_dict['genres'] = ['Not Available']
