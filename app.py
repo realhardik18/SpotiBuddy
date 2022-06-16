@@ -236,6 +236,28 @@ def tracks_stats(time):
         return redirect(url_for('Stats'))
 
 
+@app.route('/Stats/recently-played')
+def follower_stats():
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return redirect('/')
+    sp = spotipy.Spotify(auth=session.get(
+        'token_info').get('access_token'))
+    tracks = sp.current_user_recently_played(limit=50)['items']
+    rank = 0
+    for track in tracks:
+        local_dict = dict()
+        local_dict['url_to_artist'] = track['album']['artists'][0]['external_urls']['spotify']
+        local_dict['name_of_artist'] = track['album']['artists'][0]['name']
+        local_dict['name_of_track'] = track['name']
+        local_dict['popularity'] = track['popularity']
+        local_dict['rank'] = str(rank)
+        local_dict['embed_url'] = f"https://open.spotify.com/embed/track/{track['id']}?utm_source=generator"
+        rank += 1
+    return render_template('toptracks.html', user=sp.me()['display_name'], link_to_me=sp.me()['external_urls']['spotify'], data=data)
+
+
 def get_token():
     token_valid = False
     token_info = session.get("token_info", {})
@@ -257,7 +279,7 @@ def create_spotify_oauth():
         client_id=creds.client_id,
         client_secret=creds.client_secret,
         redirect_uri=url_for('authorize', _external=True),
-        scope="user-top-read user-library-read user-read-email")
+        scope="user-top-read user-library-read user-read-recently-played")
 
 
 app.run(debug=True)
