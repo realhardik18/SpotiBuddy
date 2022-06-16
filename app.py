@@ -261,6 +261,16 @@ def follower_stats():
     # return str(tracks[0])
 
 
+@app.route('/Dtracks')
+def download_tracks():
+    return 'coming soon'
+
+
+@app.route('/Showcase')
+def showcase():
+    return 'coming soon'
+
+
 def get_token():
     token_valid = False
     token_info = session.get("token_info", {})
