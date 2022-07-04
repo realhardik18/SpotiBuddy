@@ -264,7 +264,7 @@ def download_tracks():
     return 'coming soon'
 
 
-@app.route('/Showcase')
+@app.route('/Share')
 def showcase():
     return 'coming soon'
 

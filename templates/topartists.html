@@ -1,376 +1,647 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/styles/style.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/static/styles/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
     <title>SpotiBuddy</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">SpotiBuddyᵇᵉᵗᵃ</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/Stats">Stats</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/Dtracks">Download Tracks<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/Showcase">Showcase Your Playlists</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="text-light" href="{{link_to_me}}">Logged in as {{user}}</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" href="/">SpotiBuddyᵇᵉᵗᵃ</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" href="/Stats">Stats</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/Dtracks"
+              >Download Tracks<span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/Share">Share Stats</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="text-light" href="{{link_to_me}}"
+              >Logged in as {{user}}</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
-    <h1 class="title-text-for-top-artist">Here are your top artists over a period of {{time_duration}}</h1>
-    <div class="card-group" style="margin-left:40px;margin-right:40px;margin-top:20px;margin-bottom:20px;">
-        <div class="card-deck" style="margin-bottom:20px;">
-            <div class="card" style="background-color: #ffd700;">
-                <img class="card-img-top" src="{{data[0]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[0]['name']}} <h1>Rank: {{data[0]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[0]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[0]['followers']}}</h3>
-                </div>
-                <a href="{{data[0]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[0]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[0]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card" style="background-color: #C0C0C0;">
-                <img class="card-img-top" src="{{data[1]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[1]['name']}} <h1>Rank: {{data[1]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[1]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[1]['followers']}}</h3>
-                </div>
-                <a href="{{data[1]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[0]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[1]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card" style="background-color: #CD7F32;">
-                <img class="card-img-top" src="{{data[2]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[2]['name']}} <h1>Rank: {{data[2]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[2]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[2]['followers']}}</h3>
-                </div>
-                <a href="{{data[2]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[2]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[2]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[3]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[3]['name']}} <h1>Rank: {{data[3]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[3]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[3]['followers']}}</h3>
-                </div>
-                <a href="{{data[3]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[3]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[3]['popularity_score']}}</strong></small>
-                </div>
-            </div>
+    <h1 class="title-text-for-top-artist">
+      Here are your top artists over a period of {{time_duration}}
+    </h1>
+    <div
+      class="card-group"
+      style="
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      "
+    >
+      <div class="card-deck" style="margin-bottom: 20px">
+        <div class="card" style="background-color: #ffd700">
+          <img
+            class="card-img-top"
+            src="{{data[0]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[0]['name']}}
+              <h1>Rank: {{data[0]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[0]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[0]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[0]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[0]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[0]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
         </div>
+        <div class="card" style="background-color: #c0c0c0">
+          <img
+            class="card-img-top"
+            src="{{data[1]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[1]['name']}}
+              <h1>Rank: {{data[1]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[1]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[1]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[1]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[0]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[1]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card" style="background-color: #cd7f32">
+          <img
+            class="card-img-top"
+            src="{{data[2]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[2]['name']}}
+              <h1>Rank: {{data[2]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[2]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[2]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[2]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[2]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[2]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[3]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[3]['name']}}
+              <h1>Rank: {{data[3]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[3]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[3]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[3]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[3]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[3]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-group" style="margin-left:40px;margin-right:40px;margin-top:20px;margin-bottom:20px;">
-        <div class="card-deck" style="margin-bottom:20px;">
-            <div class="card">
-                <img class="card-img-top" src="{{data[4]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[4]['name']}} <h1>Rank: {{data[4]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[4]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[4]['followers']}}</h3>
-                </div>
-                <a href="{{data[4]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[4]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[4]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[5]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[5]['name']}} <h1>Rank: {{data[5]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[5]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[5]['followers']}}</h3>
-                </div>
-                <a href="{{data[5]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[5]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[5]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[6]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[6]['name']}} <h1>Rank: {{data[6]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[6]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[6]['followers']}}</h3>
-                </div>
-                <a href="{{data[6]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[6]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[6]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[7]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[7]['name']}} <h1>Rank: {{data[7]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[7]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[7]['followers']}}</h3>
-                </div>
-                <a href="{{data[7]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[7]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[7]['popularity_score']}}</strong></small>
-                </div>
-            </div>
+    <div
+      class="card-group"
+      style="
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      "
+    >
+      <div class="card-deck" style="margin-bottom: 20px">
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[4]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[4]['name']}}
+              <h1>Rank: {{data[4]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[4]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[4]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[4]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[4]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[4]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
         </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[5]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[5]['name']}}
+              <h1>Rank: {{data[5]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[5]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[5]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[5]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[5]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[5]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[6]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[6]['name']}}
+              <h1>Rank: {{data[6]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[6]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[6]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[6]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[6]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[6]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[7]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[7]['name']}}
+              <h1>Rank: {{data[7]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[7]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[7]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[7]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[7]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[7]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-group" style="margin-left:40px;margin-right:40px;margin-top:20px;margin-bottom:20px;">
-        <div class="card-deck" style="margin-bottom:20px;">
-            <div class="card">
-                <img class="card-img-top" src="{{data[8]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[8]['name']}} <h1>Rank: {{data[8]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[8]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[8]['followers']}}</h3>
-                </div>
-                <a href="{{data[8]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[8]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[8]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[9]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[9]['name']}} <h1>Rank: {{data[9]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[9]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[9]['followers']}}</h3>
-                </div>
-                <a href="{{data[9]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[9]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[9]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[10]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[10]['name']}} <h1>Rank: {{data[10]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[10]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[10]['followers']}}</h3>
-                </div>
-                <a href="{{data[10]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[10]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[10]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[11]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[11]['name']}} <h1>Rank: {{data[11]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[11]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[11]['followers']}}</h3>
-                </div>
-                <a href="{{data[11]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[11]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[11]['popularity_score']}}</strong></small>
-                </div>
-            </div>
+    <div
+      class="card-group"
+      style="
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      "
+    >
+      <div class="card-deck" style="margin-bottom: 20px">
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[8]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[8]['name']}}
+              <h1>Rank: {{data[8]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[8]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[8]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[8]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[8]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[8]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
         </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[9]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[9]['name']}}
+              <h1>Rank: {{data[9]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[9]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[9]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[9]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[9]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[9]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[10]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[10]['name']}}
+              <h1>Rank: {{data[10]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[10]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[10]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[10]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[10]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[10]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[11]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[11]['name']}}
+              <h1>Rank: {{data[11]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[11]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[11]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[11]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[11]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[11]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card-group" style="margin-left:40px;margin-right:40px;margin-top:20px;margin-bottom:20px;">
-        <div class="card-deck" style="margin-bottom:20px;">
-            <div class="card">
-                <img class="card-img-top" src="{{data[12]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[12]['name']}} <h1>Rank: {{data[12]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[12]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[12]['followers']}}</h3>
-                </div>
-                <a href="{{data[12]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[12]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[12]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[13]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[13]['name']}} <h1>Rank: {{data[13]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[13]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[13]['followers']}}</h3>
-                </div>
-                <a href="{{data[13]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[13]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[13]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="{{data[14]['pfp_of_artist']}}" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">{{data[14]['name']}} <h1>Rank: {{data[14]['rank']}}</h1>
-                    </h5>
-                    <h2>Genres:</h2>
-                    <h3 class="card-text">{{', '.join(data[14]['genres'])}}</h3>
-                    <h2>Followers:</h2>
-                    <h3>{{data[14]['followers']}}</h3>
-                </div>
-                <a href="{{data[14]['link_to_artist']}}" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">View {{data[14]['name']}} on
-                    Spotify</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>Popularity score:
-                            {{data[14]['popularity_score']}}</strong></small>
-                </div>
-            </div>
-            <div class="card" style="background:white">
-                <img class="card-img-top" src="/static/pfp.png" alt="Card image cap"
-                    style="object-fit: cover;width:100%;height: 20vw;">
-                <div class="card-body">
-                    <h5 class="card-title">Realhardik18<h1>:)</h1>
-                    </h5>
-                    <h4>Thanks</h4>
-                    <p class="card-text">Thanks for using the website. IT really means a LOT to me!</p>
-                    <h4>Feedback/Suggestion</h4>
-                    <p class="card-text">You can send them by joining my
-                        <a href="https://discord.gg/Sa534jyb9u">discord server</a> and pinging me!
-                    </p>
-                </div>
-                <a href="https://www.patreon.com/realhardik18" type="button" class="btn btn-dark"
-                    style="margin-bottom:10px;margin-left:10px;margin-right:10px;">Support on patreon</a>
-                <div class="card-footer">
-                    <small class="text-dark"><strong>drink some water since your here 🚰</strong></small>
-                </div>
-            </div>
+    <div
+      class="card-group"
+      style="
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      "
+    >
+      <div class="card-deck" style="margin-bottom: 20px">
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[12]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[12]['name']}}
+              <h1>Rank: {{data[12]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[12]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[12]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[12]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[12]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[12]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
         </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[13]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[13]['name']}}
+              <h1>Rank: {{data[13]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[13]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[13]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[13]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[13]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[13]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{data[14]['pfp_of_artist']}}"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              {{data[14]['name']}}
+              <h1>Rank: {{data[14]['rank']}}</h1>
+            </h5>
+            <h2>Genres:</h2>
+            <h3 class="card-text">{{', '.join(data[14]['genres'])}}</h3>
+            <h2>Followers:</h2>
+            <h3>{{data[14]['followers']}}</h3>
+          </div>
+          <a
+            href="{{data[14]['link_to_artist']}}"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >View {{data[14]['name']}} on Spotify</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong
+                >Popularity score: {{data[14]['popularity_score']}}</strong
+              ></small
+            >
+          </div>
+        </div>
+        <div class="card" style="background: white">
+          <img
+            class="card-img-top"
+            src="/static/pfp.png"
+            alt="Card image cap"
+            style="object-fit: cover; width: 100%; height: 20vw"
+          />
+          <div class="card-body">
+            <h5 class="card-title">
+              Realhardik18
+              <h1>:)</h1>
+            </h5>
+            <h4>Thanks</h4>
+            <p class="card-text">
+              Thanks for using the website. IT really means a LOT to me!
+            </p>
+            <h4>Feedback/Suggestion</h4>
+            <p class="card-text">
+              You can send them by joining my
+              <a href="https://discord.gg/Sa534jyb9u">discord server</a> and
+              pinging me!
+            </p>
+          </div>
+          <a
+            href="https://www.patreon.com/realhardik18"
+            type="button"
+            class="btn btn-dark"
+            style="margin-bottom: 10px; margin-left: 10px; margin-right: 10px"
+            >Support on patreon</a
+          >
+          <div class="card-footer">
+            <small class="text-dark"
+              ><strong>drink some water since your here 🚰</strong></small
+            >
+          </div>
+        </div>
+      </div>
     </div>
     <footer class="bg-dark text-center text-lg-start fixed-bottom">
-        <a class="text-light">made with ❤️ by <a class="link-info"
-                href="https://realhardik18.github.io">Realhardik18</a></a>
+      <a class="text-light"
+        >made with ❤️ by
+        <a class="link-info" href="https://realhardik18.github.io"
+          >Realhardik18</a
+        ></a
+      >
     </footer>
-</body>
-
-
+  </body>
 </html>
