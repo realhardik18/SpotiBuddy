@@ -3,8 +3,6 @@ from spotipy.oauth2 import SpotifyOAuth
 from flask import Flask, url_for, session, request, redirect, render_template
 import time
 import creds
-import locale
-
 
 app = Flask(__name__)
 
