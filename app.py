@@ -10,6 +10,11 @@ app.secret_key = 'realhardik18iscool'
 app.config['SESSION_COOKIE_NAME'] = 'realhardik18LovesCOOkies'
 
 
+@app.route('/test')
+def test():
+    return 'test'
+
+
 @app.route('/home')
 def home():
     session['token_info'], authorized = get_token()
