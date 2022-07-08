@@ -294,6 +294,4 @@ def create_spotify_oauth():
         client_secret=creds.client_secret,
         redirect_uri=url_for('authorize', _external=True),
         scope="user-top-read user-library-read user-read-recently-played")
-
-
-app.run(debug=True)
+# maybe try running with topowars process and then replace the code
