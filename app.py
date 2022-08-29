@@ -295,3 +295,7 @@ def create_spotify_oauth():
         redirect_uri=url_for('authorize', _external=True),
         scope="user-top-read user-library-read user-read-recently-played")
 # maybe try running with topowars process and then replace the code
+
+# add in flask dance oauth and remake whole thing
+# possible discord bot
+# images to share when done with stats
