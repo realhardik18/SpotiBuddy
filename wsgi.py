@@ -1,3 +1,6 @@
 from app import app
-if __name__ == "__main__":
-    app.run(debug=True)
+import os
+
+if __name__ == '__main__':
+    app.run(threaded=True, port=int(os.environ.get("PORT",
+                                                   os.environ.get("SPOTIPY_REDIRECT_URI", 5000).split(":")[-1])))
