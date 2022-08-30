@@ -82,3 +82,7 @@ def current_user():
         return redirect('/')
     spotify = spotipy.Spotify(auth_manager=auth_manager)
     return spotify.current_user()
+
+
+# TO DO
+# SEE SOL FOR MULTIPLE USERS OR SUMBIT EXTENSION MAYBE
